@@ -8,18 +8,26 @@ export async function cadastrarUsuario(novoUsuario){
   const users = await AsyncStorage.getItem(USERS_KEY);
   const lista = users ? JSON.parse(users) : [];
 
+  const existe = lista.find(
+    u => u.username.toLowerCase() === novoUsuario.username.toLowerCase()
+  );
+
+  if(existe){
+    throw new Error("Usuário já existe");
+  }
+  
   lista.push(novoUsuario);
 
   await AsyncStorage.setItem(USERS_KEY, JSON.stringify(lista));
 }
 
-export async function login(email, senha){
+export async function login(username, senha){
 
   const users = await AsyncStorage.getItem(USERS_KEY);
   const lista = users ? JSON.parse(users) : [];
 
   const user = lista.find(
-    u => u.email === email && u.senha === senha
+    u => u.username === username && u.senha === senha
   );
 
   if(user){

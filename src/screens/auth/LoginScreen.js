@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useState , useEffect } from "react";
 import {
   View,
   Text,
@@ -11,6 +12,12 @@ import {
 import { login } from "../../services/authService";
 
 export default function LoginScreen({ setUser, navigation }) {
+
+  {/* //Função teste Limpar usuarios
+  useEffect(() => {
+    AsyncStorage.removeItem("@users");
+  }, []);
+  */}
 
   const [username,setUsername] = useState("");
   const [password,setPassword] = useState("");

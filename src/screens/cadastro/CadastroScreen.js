@@ -5,21 +5,26 @@ import { cadastrarUsuario } from "../../services/authService";
 export default function CadastroScreen({ navigation }){
 
   const [nome,setNome] = useState("");
-  const [email,setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [senha,setSenha] = useState("");
   const [tipo, setTipo] = useState(null);
 
   async function cadastrar(){
 
-    if(!nome || !email || !senha || !tipo){
+    if(!nome || !username || !senha || !tipo){
       Alert.alert("Erro","Preencha todos os campos");
       return;
     }
+    try {
+      await cadastrarUsuario({ nome, username, senha, tipo });
 
-    await cadastrarUsuario({ nome, email, senha, tipo });
-
-    Alert.alert("Sucesso","Conta criada!");
-    navigation.goBack();
+      Alert.alert("Sucesso","Conta criada!");
+      navigation.goBack();
+      
+    }catch(error){
+      Alert.alert("Erro", error.message);
+    }
+    
   }
 
   return(
@@ -35,9 +40,9 @@ export default function CadastroScreen({ navigation }){
       />
 
       <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
+        placeholder="Usuário"
+        value={username}
+        onChangeText={setUsername}
         style={styles.input}
       />
 
