@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import {
   View,
@@ -7,9 +7,19 @@ import {
   StyleSheet
 } from "react-native";
 
-import { logout } from "../../services/authService";
+import { logout, getUser } from "../../services/authService";
 
 export default function VendedorDashboard({ navigation, setUser }) {
+  
+  const [user, setUserLocal] = useState(null);
+
+  useEffect(() => {
+    async function carregar(){
+      const u = await getUser();
+      setUserLocal(u);
+    }
+    carregar();
+  }, []);
 
   async function handleLogout(){
     await logout();
@@ -35,6 +45,17 @@ export default function VendedorDashboard({ navigation, setUser }) {
           Ver Pedidos
         </Text>
       </TouchableOpacity>
+
+      {user?.tipo === "admin" && (
+        <TouchableOpacity
+          style={styles.botaoAdmin}
+          onPress={() => navigation.navigate("Cadastro")}
+        >
+          <Text style={styles.textoAdmin}>
+            Criar conta
+          </Text>
+        </TouchableOpacity>
+      )}
 
       <TouchableOpacity
         style={styles.logoutButton}
@@ -81,6 +102,20 @@ const styles = StyleSheet.create({
     justifyContent:"center",
     gap:8,
     marginBottom:15
+  },
+
+  botaoAdmin:{
+    backgroundColor:"#27ae60",
+    padding:12,
+    borderRadius:8,
+    marginBottom:15,
+    alignItems:"center"
+  },
+
+  textoAdmin:{
+    color:"#fff",
+    fontWeight:"bold",
+    fontSize:16
   },
 
   logoutButton:{

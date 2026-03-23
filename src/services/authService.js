@@ -3,7 +3,39 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const USERS_KEY = "@users";
 const USER_LOGADO = "@user";
 
+export async function criarAdminPadrao(){
+
+  const users = await AsyncStorage.getItem(USERS_KEY);
+  const lista = users ? JSON.parse(users) : [];
+
+  const existeAdmin = lista.find(u => u.tipo === "admin");
+
+  if(!existeAdmin){
+
+    const admin = {
+      nome: "Admin",
+      username: "admin",
+      senha: "123",
+      tipo: "admin"
+    };
+
+    lista.push(admin);
+
+    await AsyncStorage.setItem(USERS_KEY, JSON.stringify(lista));
+  }
+}
+
 export async function cadastrarUsuario(novoUsuario){
+  
+  const userLogado = await getUser();
+
+  if(novoUsuario.tipo === "vendedor" && userLogado?.tipo !== "admin"){
+    throw new Error("Você não tem permissão para criar conta de vendedor");
+  }
+
+  if(!novoUsuario.username){
+    throw new Error("Username é obrigatório");
+  }
 
   const users = await AsyncStorage.getItem(USERS_KEY);
   const lista = users ? JSON.parse(users) : [];

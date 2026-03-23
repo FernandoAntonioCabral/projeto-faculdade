@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/auth/LoginScreen";
 import CadastroScreen from "../screens/cadastro/CadastroScreen";
 
+
 const Stack = createNativeStackNavigator();
 
 export default function AuthNavigator({ setUser }){

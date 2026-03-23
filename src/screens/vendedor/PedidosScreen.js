@@ -1,6 +1,6 @@
 import GrupoPedidos from "../../components/GrupoPedidos";
-import React, { useState, useEffect, useCallback } from "react";
-import { adicionarTotalPedido, totalPorCliente } from '../../utils/PedidosController';
+import React, { useState, useCallback } from "react";
+import { adicionarTotalPedido } from '../../utils/PedidosController';
 import { useFocusEffect } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import {
