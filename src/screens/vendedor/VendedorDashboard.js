@@ -1,3 +1,4 @@
+import HeaderUsuario from "../../components/HeaderUsuario";
 import React, { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import {
@@ -30,45 +31,53 @@ export default function VendedorDashboard({ navigation, setUser }) {
 
     <View style={styles.container}>
 
-      <View style={styles.header}>
-        <Text style={styles.title}>
-          Painel do Vendedor
-        </Text>
+      <View style={styles.topo}>
+        <HeaderUsuario />
       </View>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("Pedidos")}
-      >
-        <Ionicons name="clipboard-outline" size={20} color="#fff" />
-        <Text style={styles.buttonText}>
-          Ver Pedidos
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.conteudo}>
 
-      {user?.tipo === "admin" && (
+        <View style={styles.header}>
+          <Text style={styles.title}>
+            Painel do Vendedor
+          </Text>
+        </View>
+
         <TouchableOpacity
-          style={styles.botaoAdmin}
-          onPress={() => navigation.navigate("Cadastro")}
+          style={styles.button}
+          onPress={() => navigation.navigate("Pedidos")}
         >
-          <Text style={styles.textoAdmin}>
-            Criar conta
+          <Ionicons name="clipboard-outline" size={20} color="#fff" />
+          <Text style={styles.buttonText}>
+            Ver Pedidos
           </Text>
         </TouchableOpacity>
-      )}
 
-      <TouchableOpacity
-        style={styles.logoutButton}
-        onPress={handleLogout}
-      >
-        <Ionicons name="log-out-outline" size={20} color="#fff" />
-        <Text style={styles.buttonText}>
-          Sair
-        </Text>
-      </TouchableOpacity>
+        {user?.tipo === "admin" && (
+          <TouchableOpacity
+            style={styles.botaoAdmin}
+            onPress={() => navigation.navigate("Cadastro")}
+          >
+            <Ionicons name="person-add-outline" size={20} color="#fff" />
+            <Text style={styles.textoAdmin}>
+              Criar Conta
+            </Text>
+          </TouchableOpacity>
+        )}
+
+        <TouchableOpacity
+          style={styles.logoutButton}
+          onPress={handleLogout}
+        >
+          <Ionicons name="log-out-outline" size={20} color="#fff" />
+          <Text style={styles.buttonText}>
+            Sair
+          </Text>
+        </TouchableOpacity>
+
+      </View>
 
     </View>
-
   );
 
 }
@@ -77,8 +86,16 @@ const styles = StyleSheet.create({
 
   container:{
     flex:1,
-    padding:30,
     backgroundColor:"#f5f6fa",
+    padding:20
+  },
+  
+  topo:{
+    marginTop:20,
+  },
+
+  conteudo:{
+    flex:1,
     justifyContent:"center"
   },
 
@@ -97,19 +114,22 @@ const styles = StyleSheet.create({
     backgroundColor:"#2f80ed",
     padding:15,
     borderRadius:10,
+    marginBottom:15,
     flexDirection:"row",
     alignItems:"center",
     justifyContent:"center",
-    gap:8,
-    marginBottom:15
+    gap:8
   },
 
   botaoAdmin:{
     backgroundColor:"#27ae60",
-    padding:12,
-    borderRadius:8,
+    padding:15,
+    borderRadius:10,
     marginBottom:15,
-    alignItems:"center"
+    flexDirection:"row",
+    alignItems:"center",
+    justifyContent:"center",
+    gap:8
   },
 
   textoAdmin:{

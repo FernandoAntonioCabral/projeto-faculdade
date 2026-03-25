@@ -140,16 +140,22 @@ export default function PedidoScreen({ navigation }) {
         renderItem={renderItem}
       />
 
-      <Text style={styles.total}>
-        Total do Pedido: R$ {calcularTotal().toFixed(2)}
-      </Text>
+      {itens.length > 0 && (
+        <Text style={styles.total}>
+          Total do pedido: R$ {calcularTotal().toFixed(2)}
+        </Text>
+      )}
       
-      <TouchableOpacity
-        style={styles.button}
-        onPress={enviarPedido}
-      >
-        <Text style={styles.buttonText}>Enviar Pedido</Text>
-      </TouchableOpacity>
+      {itens.length > 0 && (
+        <TouchableOpacity
+          style={styles.button}
+          onPress={enviarPedido}
+        >
+          <Text style={styles.buttonText}>
+            Enviar Pedido
+          </Text>
+        </TouchableOpacity>
+      )}
 
     </View>
 
@@ -161,7 +167,7 @@ const styles = StyleSheet.create({
 
   container:{
     flex:1,
-    padding:30
+    padding:30,
   },
 
   title:{
@@ -187,12 +193,21 @@ const styles = StyleSheet.create({
     fontSize:16
   },
 
+  total:{
+    fontSize:18,
+    fontWeight:"bold",
+    textAlign:"center",
+    marginTop:15,
+    color:"#333"
+  },
+
   button:{
     backgroundColor:"#2f80ed",
     padding:15,
     borderRadius:8,
     alignItems:"center",
-    marginTop:20
+    marginTop:20,
+    marginBottom:20
   },
 
   buttonText:{

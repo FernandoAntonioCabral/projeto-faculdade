@@ -1,4 +1,5 @@
 import React from "react";
+import HeaderUsuario from "../../components/HeaderUsuario";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { logout } from "../../services/authService";
@@ -14,39 +15,47 @@ export default function ClienteHome({ navigation, setUser }) {
 
     <View style={styles.container}>
 
-      <Text style={styles.title}>
-        Área do Cliente
-      </Text>
+      <View style={styles.topo}>
+        <HeaderUsuario />
+      </View>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("Pedido")}
-      >
-        <Ionicons name="cart-outline" size={22} color="#fff" />
-        <Text style={styles.buttonText}>
-          Fazer Pedido
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.conteudo}>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("Historico")}
-      >
-        <Ionicons name="receipt-outline" size={22} color="#fff" />
-        <Text style={styles.buttonText}>
-          Meus Pedidos
+        <Text style={styles.title}>
+          Área do Cliente
         </Text>
-      </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.logout}
-        onPress={handleLogout}
-      >
-        <Ionicons name="log-out-outline" size={22} color="#fff" />
-        <Text style={styles.buttonText}>
-          Sair
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("Pedido")}
+        >
+          <Ionicons name="cart-outline" size={22} color="#fff" />
+          <Text style={styles.buttonText}>
+            Fazer Pedido
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("Historico")}
+        >
+          <Ionicons name="receipt-outline" size={22} color="#fff" />
+          <Text style={styles.buttonText}>
+            Meus Pedidos
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.logout}
+          onPress={handleLogout}
+        >
+          <Ionicons name="log-out-outline" size={22} color="#fff" />
+          <Text style={styles.buttonText}>
+            Sair
+          </Text>
+        </TouchableOpacity>
+
+      </View>
 
     </View>
 
@@ -58,9 +67,17 @@ const styles = StyleSheet.create({
 
   container:{
     flex:1,
-    padding:30,
-    justifyContent:"center",
-    backgroundColor:"#fff"
+    backgroundColor:"#f5f6fa",
+    padding:20
+  },
+
+  topo:{
+    marginTop:20,
+  },
+
+  conteudo:{
+    flex:1,
+    justifyContent:"center"
   },
 
   title:{
