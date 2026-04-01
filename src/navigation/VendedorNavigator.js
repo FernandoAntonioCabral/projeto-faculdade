@@ -3,6 +3,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import VendedorDashboard from "../screens/vendedor/VendedorDashboard";
 import PedidosScreen from "../screens/vendedor/PedidosScreen";
+import CaixaScreen from "../screens/vendedor/CaixaScreen";
+import NovoMovimentoScreen from "../screens/vendedor/NovoMovimentoScreen";
 import CadastroScreen from "../screens/cadastro/CadastroScreen";
 
 const Stack = createNativeStackNavigator();
@@ -20,6 +22,10 @@ export default function VendedorNavigator({ setUser }) {
       <Stack.Screen name="Pedidos" component={PedidosScreen} />
 
       <Stack.Screen name="Cadastro" component={CadastroScreen} />
+
+      <Stack.Screen name="Caixa" component={CaixaScreen} />
+
+      <Stack.Screen name="NovoMovimento" component={NovoMovimentoScreen} />
 
     </Stack.Navigator>
 

@@ -118,8 +118,11 @@ export default function PedidoScreen({ navigation }) {
   return(
 
     <View style={styles.container}>
-
-      <Text style={styles.title}>Novo Pedido</Text>
+      
+      <View style={styles.header}>
+        <Ionicons name="cart-outline" size={24} color="#fff" />
+        <Text style={styles.title}>Novo Pedido</Text>
+      </View>
 
       <TouchableOpacity
         style={styles.catalogo}
@@ -170,10 +173,17 @@ const styles = StyleSheet.create({
     padding:30,
   },
 
+  header:{
+    flexDirection:"row",
+    alignItems:"center",
+    justifyContent:"center",
+    gap:8,
+    marginBottom:20
+  },
+
   title:{
     fontSize:24,
     fontWeight:"bold",
-    marginBottom:20,
     textAlign:"center"
   },
 

@@ -91,11 +91,11 @@ const styles = StyleSheet.create({
     flexDirection:"row",
     alignItems:"center",
     justifyContent:"center",
-    gap:10,
+    gap:8,
     backgroundColor:"#2f80ed",
     padding:15,
     borderRadius:8,
-    marginBottom:20
+    marginBottom:15
   },
 
   logout:{

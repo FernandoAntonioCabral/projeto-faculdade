@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { cadastrarUsuario } from "../../services/authService";
 
@@ -30,7 +31,10 @@ export default function CadastroScreen({ navigation }){
   return(
     <View style={styles.container}>
 
-      <Text style={styles.title}>Cadastro</Text>
+      <View style={styles.header}>
+        <Ionicons name="person-add-outline" size={24} color="#fff" />
+        <Text style={styles.title}>Cadastro</Text>
+      </View>
 
       <TextInput
         placeholder="Nome"
@@ -89,8 +93,23 @@ export default function CadastroScreen({ navigation }){
 }
 
 const styles = StyleSheet.create({
-  container:{ flex:1, padding:20 },
-  title:{ fontSize:24, fontWeight:"bold", marginBottom:20 },
+  container:{ 
+    flex:1, 
+    padding:20 
+  },
+  header:{
+    flexDirection:"row",
+    alignItems:"center",
+    justifyContent:"center",
+    gap:8,
+    marginBottom:20
+  },
+
+  title:{ 
+    fontSize:24, 
+    fontWeight:"bold", 
+  },
+
   input:{
     borderWidth:1,
     borderColor:"#ccc",
@@ -98,12 +117,14 @@ const styles = StyleSheet.create({
     marginBottom:10,
     borderRadius:6
   },
+
   button:{
     backgroundColor:"#2f80ed",
     padding:15,
     borderRadius:8,
     alignItems:"center"
   },
+
   buttonText:{
     color:"#fff",
     fontWeight:"bold"

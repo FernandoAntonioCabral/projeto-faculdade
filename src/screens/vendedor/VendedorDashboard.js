@@ -53,6 +53,16 @@ export default function VendedorDashboard({ navigation, setUser }) {
           </Text>
         </TouchableOpacity>
 
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("Caixa")}
+        >
+          <Ionicons name="cash-outline" size={20} color="#fff" />
+          <Text style={styles.buttonText}>
+            Controle de Caixa
+          </Text>
+        </TouchableOpacity>
+
         {user?.tipo === "admin" && (
           <TouchableOpacity
             style={styles.botaoAdmin}

@@ -126,11 +126,8 @@ const styles = StyleSheet.create({
   header:{
     flexDirection:"row",
     alignItems:"center",
+    justifyContent:"center",
     gap:8,
-    marginBottom:20
-  },
-
-  grupo:{
     marginBottom:20
   },
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
 import {
   View,
   Text,
@@ -131,9 +132,10 @@ export default function CatalogoScreen({ navigation, route }) {
 
     <View style={styles.container}>
 
-      <Text style={styles.title}>
-        Catálogo
-      </Text>
+      <View style={styles.header}>
+        <Ionicons name="grid-outline" size={24} color="#fff" />
+        <Text style={styles.title}> Catálogo </Text>
+      </View>
 
       <FlatList 
         style={styles.flat}
@@ -155,15 +157,23 @@ const styles = StyleSheet.create({
     padding:20,
     backgroundColor:"#fff"
   },
+
+  header:{
+    flexDirection:"row",
+    alignItems:"center",
+    justifyContent:"center",
+    gap:8,
+    marginBottom:20
+  },
+
   flat:{
     color:"#8a0a0a"
   },
 
   title:{
-    fontSize:26,
+    fontSize:24,
     fontWeight:"bold",
     textAlign:"center",
-    marginBottom:20
   },
 
   card:{
