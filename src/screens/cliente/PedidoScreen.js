@@ -2,23 +2,31 @@ import React, { useState, useEffect } from "react";
 import { produtos } from '../../services/produtos';
 import { adicionarTotalPedido } from '../../utils/PedidosController';
 import { Ionicons } from "@expo/vector-icons";
+import { Animated } from "react-native";
 import {
   View,
   Text,
+  TextInput,
+  ScrollView,
   TouchableOpacity,
   StyleSheet,
   Alert,
   FlatList
 } from "react-native";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { salvarPedido } from "../../services/storage";
 import { getUser } from "../../services/authService";
 
 export default function PedidoScreen({ navigation }) {
 
-  const [cliente,setCliente] = useState("");
-  const [itens,setItens] = useState([]);
+  const [clientes, setClientes] = useState([]);
+  const [clienteSelecionado, setClienteSelecionado] = useState(null);
   const [user,setUser] = useState(null);
+  const [itens,setItens] = useState([]);
+  const [dropdownClientes, setDropdownClientes] = useState(false);
+  const [animAltura] = useState(new Animated.Value(0));
+
 
   useEffect(()=>{
     carregarUsuario();
@@ -27,12 +35,20 @@ export default function PedidoScreen({ navigation }) {
   async function carregarUsuario(){
 
     const u = await getUser();
-
-    if(u){
-      setUser(u);
-      setCliente(u.nome);
+    setUser(u);
+  
+    if(u?.tipo === "admin"){
+      carregarClientes();
     }
 
+  }
+
+  async function carregarClientes(){
+    const data = await AsyncStorage.getItem("@users");
+    const users = data ? JSON.parse(data) : [];
+
+    const apenasClientes = users.filter(u => u.tipo === "cliente");
+    setClientes(apenasClientes);
   }
 
   function abrirCatalogo(){
@@ -54,9 +70,20 @@ export default function PedidoScreen({ navigation }) {
       return;
     }
 
+    if(user.tipo === "admin" && !clienteSelecionado){
+      Alert.alert("Erro", "Selecione um cliente");
+      return;
+    }
+
+    const nomeCliente = user.tipo === "admin"
+      ? clienteSelecionado
+      : user.nome;
+
     const pedido = {
       id: Date.now(),
-      cliente: user.nome,
+      cliente: nomeCliente,
+      criadoPor: user.nome,
+      tipoCriador: user.tipo,
       itens,
       data: Date.now()
     };
@@ -65,9 +92,13 @@ export default function PedidoScreen({ navigation }) {
     Alert.alert("Sucesso","Pedido enviado");
 
     setItens([]);
+    setClienteSelecionado(null);
 
     navigation.goBack();
 
+  }
+  if(!user){
+    return null;
   }
 
   function buscarPreco(nomeProduto, tamanho){
@@ -90,6 +121,25 @@ export default function PedidoScreen({ navigation }) {
     const novaLista = [...itens];
     novaLista.splice(index,1);
     setItens(novaLista);
+  }
+
+  function toggleDropdown(){
+
+    if(dropdownClientes){
+      Animated.timing(animAltura, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: false
+      }).start();
+    }else{
+      Animated.timing(animAltura, {
+        toValue: Math.min(clientes.length * 50, 200),
+        duration: 200,
+        useNativeDriver: false
+      }).start();
+    }
+
+    setDropdownClientes(!dropdownClientes);
   }
 
   function renderItem({item,index}){
@@ -124,6 +174,44 @@ export default function PedidoScreen({ navigation }) {
         <Text style={styles.title}>Novo Pedido</Text>
       </View>
 
+      {user?.tipo === "admin" && (
+        <View>
+          <TouchableOpacity
+            style={styles.comboButton}
+            onPress={toggleDropdown}
+          >
+            <View style={styles.comboContent}>
+              <Text>
+                {clienteSelecionado || "Selecionar Cliente"}
+              </Text>
+              <Text>▼</Text>
+            </View>
+          </TouchableOpacity>
+
+          <Animated.View style={[styles.dropdown, { height: animAltura }]}>
+
+            <ScrollView>
+              {clientes.map((c, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={[
+                    styles.itemCliente,
+                    clienteSelecionado === c.nome && styles.itemSelecionado
+                  ]}
+                  onPress={() => {
+                    setClienteSelecionado(c.nome);
+                    toggleDropdown();
+                  }}
+                >
+                  <Text>{c.nome}</Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+
+            
+          </Animated.View>
+        </View>
+      )}
       <TouchableOpacity
         style={styles.catalogo}
         onPress={abrirCatalogo}
@@ -235,6 +323,39 @@ const styles = StyleSheet.create({
     borderWidth:1,
     borderColor:"#ccc",
     borderRadius:6
+  },
+
+  comboButton:{
+    backgroundColor:"#fff",
+    padding:12,
+    borderRadius:8,
+    borderWidth:1,
+    borderColor:"#ccc",
+    marginBottom:10
+  },
+
+  dropdown:{
+    backgroundColor:"#fff",
+    borderRadius:10,
+    overflow:"hidden",
+    marginBottom:10,
+    elevation:3
+  },
+
+  comboContent:{
+    flexDirection:"row",
+    justifyContent:"space-between",
+    alignItems:"center"
+  },
+
+  itemCliente:{
+    padding:12,
+    borderBottomWidth:1,
+    borderBottomColor:"#eee"
+  },
+
+  itemSelecionado:{
+    backgroundColor:"#dfe6e9"
   },
 
   itemTexto:{

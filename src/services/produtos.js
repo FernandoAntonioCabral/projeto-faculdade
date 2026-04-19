@@ -5,7 +5,8 @@ export const produtos = [
     tamanhos: [
       { tamanho: "P", preco: 25 },
       { tamanho: "M", preco: 35 },
-      { tamanho: "G", preco: 45 }
+      { tamanho: "G", preco: 45 },
+      { tamanho: "Barra", preco: 50}
     ]
   },
   {
@@ -14,7 +15,8 @@ export const produtos = [
     tamanhos: [
       { tamanho: "P", preco: 25 },
       { tamanho: "M", preco: 35 },
-      { tamanho: "G", preco: 45 }
+      { tamanho: "G", preco: 45 },
+      { tamanho: "Barra", preco: 50}
     ]
   },
   {
@@ -23,7 +25,8 @@ export const produtos = [
     tamanhos: [
       { tamanho: "P", preco: 25 },
       { tamanho: "M", preco: 35 },
-      { tamanho: "G", preco: 45 }
+      { tamanho: "G", preco: 45 },
+      { tamanho: "Barra", preco: 50}
     ]
   }
 ];

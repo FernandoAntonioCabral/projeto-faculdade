@@ -16,6 +16,12 @@ export default function PedidoCard({ pedido }) {
         Cliente: {pedido.cliente}
       </Text>
 
+      {pedido.tipoCriador === "admin" && (
+        <Text style={styles.adm}>
+          Criado por: {pedido.criadoPor} ({pedido.tipoCriador})
+        </Text>
+      )}
+
       {pedido.itens.map((produto, index) => (
         <Text key={index} style={styles.item}>
           • {produto.nome} ({produto.tamanho}) x{produto.quantidade}
@@ -50,6 +56,13 @@ const styles = StyleSheet.create({
 
   cliente:{
     fontSize:16,
+    fontWeight:"bold",
+    marginBottom:10,
+    color:"#333"
+  },
+
+  adm:{
+    fontSize:14,
     fontWeight:"bold",
     marginBottom:10,
     color:"#333"
