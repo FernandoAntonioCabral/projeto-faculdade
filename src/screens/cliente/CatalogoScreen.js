@@ -73,7 +73,10 @@ export default function CatalogoScreen({ navigation, route }) {
             onPress={()=>selecionarTamanho(t)}
           >
             <Text>
-              {t.tamanho} - R$ {t.preco}
+              {t.tamanho} - R$ {t.preco.toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })}
             </Text>
           </TouchableOpacity>
 

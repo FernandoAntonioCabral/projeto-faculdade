@@ -55,7 +55,9 @@ export default function HistoricoPedidos(){
 
   function calcularTotalPedido(pedido){
     return pedido.itens.reduce((total, item) => {
-      const preco = item.preco || 0;
+      const preco = Number(
+        String(item.preco).replace(",", ".")
+      ) || 0;
       return total + (item.quantidade * preco);
     }, 0);
   }
@@ -79,7 +81,9 @@ export default function HistoricoPedidos(){
       </Text>
 
       <Text style={styles.total}>
-        Total: R$ {calcularTotalPedido(item).toFixed(2)}
+        Total: R$ {calcularTotalPedido(item).toLocaleString("pt-BR", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2})}
       </Text>
 
     </View>

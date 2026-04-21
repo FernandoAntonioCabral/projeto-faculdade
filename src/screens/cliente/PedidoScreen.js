@@ -150,7 +150,9 @@ export default function PedidoScreen({ navigation }) {
 
         <Text style={styles.itemTexto}>
           {item.nome} ({item.tamanho}) x{item.quantidade}
-          {" - R$ "}{(item.quantidade * item.preco).toFixed(2)}
+          {" - R$ "}{(item.quantidade * item.preco).toLocaleString("pt-BR", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2})}
         </Text>
 
         <TouchableOpacity
@@ -233,7 +235,10 @@ export default function PedidoScreen({ navigation }) {
 
       {itens.length > 0 && (
         <Text style={styles.total}>
-          Total do pedido: R$ {calcularTotal().toFixed(2)}
+          Total do pedido: R$ {calcularTotal().toLocaleString("pt-BR", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          })}
         </Text>
       )}
       
